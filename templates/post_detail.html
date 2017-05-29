@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load urify %}
+{% block head_title %} {{ instance.title }} | {{ block.super }} {% endblock head_title %}
+{% block content %}
+<div class='col-sm-6 col-sm-offset-3'>
+
+<h4>{{ title }} <small>{% if instance.draft %} <span style='color:red;'>Draft</span> {% endif %} {{ instance.publish}}</small></h4></br> 
+
+{% if instance.user.get_full_name %}
+<p> Author: {{instance.user.get_full_name }} </p>
+
+{% endif %}
+
+<div class='row'>
+<div class='col-sm-12 col-sm-offset-1'>
+{{instance.context|linebreaks}}<hr/>
+
+
+<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+Facebook
+</a>|
+<a href="https://twitter.com/home?status={{ instance.context|truncatechars:120|urify }}%20{{ request.build_absolute_uri }}/">
+Twitter
+</a>|
+<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>
+Google+
+</a>|
+<a href="https://www.linkedin.com/shareArticle?mini=true&url
+={{ request.build_absolute_uri }}/&title={{ instance.context|truncatechars:120|urify }}&source={{ request.build_absolute_uri }}">
+Linkedin
+</a>
+</p>
+<p><div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div><p>
+<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div> <hr/>
+</div>
+</div>
+</div>
+
+{% endblock content %}
+
+
+</body>
+</html>
